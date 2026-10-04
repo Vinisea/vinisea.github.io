@@ -1,0 +1,38 @@
+name: Deploy React (Vite) to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    # faz com que rode dentro da pasta frontend
+    defaults:
+      run:
+        working-directory: ./frontend
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: './frontend/package-lock.json' # isso alerta sobre o lugar certo do arquivo
+
+      - name: Instalar dependências do Frontend
+        run: npm ci
+
+      - name: Gerar Build do Vite
+        run: npm run build
+
+      - name: Deploy para o GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: frontend/dist
+          branch: gh-pages # Branch que o GitHub Pages vai ler
