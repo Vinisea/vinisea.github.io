@@ -32,7 +32,7 @@ export const usuario = conn.define(
 
     defaultScope: {
       attributes: {
-        exclude: [senha],
+        exclude: ["senha"],
       },
     },
     scopes: {

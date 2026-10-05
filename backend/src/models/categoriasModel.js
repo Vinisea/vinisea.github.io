@@ -1,8 +1,8 @@
 import { conn } from "../config/database.js";
 import { DataTypes } from "sequelize";
 
-export const categorias = conn.define(
-  "categorias",
+export const categoria = conn.define(
+  "categoria",
   {
     id_categoria: {
         type: DataTypes.INTEGER,
@@ -28,7 +28,7 @@ export const categorias = conn.define(
     },
   },
   {
-    tableName: "categorias",
+    tableName: "categoria",
     timestamps: false,
   },
 );

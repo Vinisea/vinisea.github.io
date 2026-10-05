@@ -1,8 +1,8 @@
-import { conn } from "../config/database";
+import { conn } from "../config/database.js";
 import { DataTypes } from "sequelize";
 
-export const atividades = conn.define(
-  "atividades",
+export const atividade = conn.define(
+  "atividade",
   {
     id_atividade: {
         type: DataTypes.INTEGER,
@@ -32,6 +32,10 @@ export const atividades = conn.define(
             len: {args: [2, 40], msg: "Deve conter no máximo 40 caracteres"}
         }
     },
+    instituicao: {
+        type: DataTypes.ENUM(["SESI", "SENAI"]),
+        allowNull: false,
+    },
     habilidades: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -49,6 +53,14 @@ export const atividades = conn.define(
                     throw new Error("A data do evento não pode ser futura!")
                 }
             }
+        }
+    },
+    img_url: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            notEmpty: {msg: "A url da imagem é obrigatório"},
+            isURL: {msg: "Insira um link válido"},
         }
     },
     id_categoria: {
@@ -69,7 +81,7 @@ export const atividades = conn.define(
     },
   },
   {
-    tableName: "atividades",
+    tableName: "atividade",
     timestamps: true,
   },
 );
