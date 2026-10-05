@@ -5,6 +5,7 @@ frontend/node_modules
 #BACK
 backend/.env
 backend/.env.test
+backend/database
 
 #FRONT
 frontend/.env
