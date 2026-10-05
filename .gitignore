@@ -1,12 +1,12 @@
 #NODE_MODULES
-./backend/node_modules
-./frontend/node_modules
+backend/node_modules
+frontend/node_modules
 
 #BACK
-./backend/.env
-./backend/.env.test
+backend/.env
+backend/.env.test
 
 #FRONT
-./frontend/.env
-./frontend/.env.test
+frontend/.env
+frontend/.env.test
 
