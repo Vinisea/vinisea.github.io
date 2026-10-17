@@ -15,7 +15,7 @@ export const categoria = conn.define(
         allowNull: false,
         validate: {
             notEmpty: {msg: "O nome não pode estar vazio"},
-            isAlpha: {msg: "O nome deve conter letras"},
+            isAlpha: {args: ["pt-BR"], msg: "O nome deve conter letras"},
             len: {args: [2, 100], msg: "O nome deve conter entre 2 e 100 caracteres"}
         }
     },
