@@ -1,4 +1,5 @@
 import { categoria } from "../models/index.js";
+import { Op } from "sequelize";
 
 export const listarcategoria = async (req, res) => {
     try {
@@ -24,9 +25,16 @@ export const listarCategoriaPorId = async (req, res) => {
 
 export const criarCategoria = async (req, res) => {
     const {nome, descricao} = req.body;
+    
+    if (!nome || nome.trim().length < 2) return res.status(400).json({message: "O nome da categoria deve ter ao menos 2 caracteres"})
 
     try {
+        const categoriaExiste = await categoria.findOne({where: {nome: `${nome}`}})
+        if (categoriaExiste) return res.status(404).json({message: "Já existe uma categoria com esse nome"})
         
+        const novaCategoria = {nome, descricao}
+        const categoriaCriada = await categoria.create(novaCategoria)
+        res.status(201).json({message: "Categoria criada!", categoria: categoriaCriada})
     } catch (error) {
         res.status(500).json({message: error.message})
     }
@@ -38,8 +46,10 @@ export const atualizarCategoria = async (req, res) => {
     try {
         const categoriaFiltrada = await categoria.findByPk(id);
         if(!categoriaFiltrada) return res.status(404).json({message: "Categoria não localizada"})
-        if(!nome) nome = nome;
-        if(!descricao) descricao = descricao;
+
+        if(nome !== undefined) categoria.nome = nome;
+        if(descricao !== undefined) categoria.descricao = descricao
+
         categoriaFiltrada.update(nome, descricao);
         res.status(200).json({message: "Categoria atualizada com sucesso!", categoria: categoriaFiltrada})        
     } catch (error) {
