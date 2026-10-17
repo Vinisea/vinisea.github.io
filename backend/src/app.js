@@ -4,7 +4,7 @@ import cors from "cors";
 import { conn } from "./config/database.js";
 
 //importar rotas
-import tarefasRoutes from "./routes/tarefasRoutes.route.js"
+import routes from "./routes/index.js"
 
 const app = express();
 
@@ -25,7 +25,7 @@ conn
   .catch((error) => console.log(error.message));
 
 //ROTAS - ENDPOINTS
-app.use("/tarefas", tarefasRoutes);
+app.use("/api", routes);
 
 app.use((req, res) => {
     res.status(404).json({message: "Rota não encontrada :("})
