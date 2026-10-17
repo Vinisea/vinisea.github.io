@@ -9,10 +9,10 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/categoria", listarcategoria);
-router.get("/categoria/:id", listarCategoriaPorId);
-router.post("/categoria", criarCategoria);
-router.put("/categoria/:id", atualizarCategoria);
-router.delete("/categoria/:id", deletarCategoria);
+router.get("/listar", listarcategoria);
+router.get("/listar/:id", listarCategoriaPorId);
+router.post("/criar", criarCategoria);
+router.put("/atualizar/:id", atualizarCategoria);
+router.delete("/deletar/:id", deletarCategoria);
 
 export default router;
