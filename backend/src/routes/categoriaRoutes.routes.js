@@ -1,7 +1,7 @@
 import {
   listarcategoria,
   listarCategoriaPorId,
-  criarCategoria,
+  cadastrarCategoria,
   atualizarCategoria,
   deletarCategoria,
 } from "../controllers/categoriaController.js";
@@ -11,7 +11,7 @@ const router = Router();
 
 router.get("/listar", listarcategoria);
 router.get("/listar/:id", listarCategoriaPorId);
-router.post("/criar", criarCategoria);
+router.post("/cadastrar", cadastrarCategoria);
 router.put("/atualizar/:id", atualizarCategoria);
 router.delete("/deletar/:id", deletarCategoria);
 

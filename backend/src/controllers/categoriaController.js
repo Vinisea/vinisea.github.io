@@ -22,7 +22,7 @@ export const listarCategoriaPorId = async (req, res) => {
     }
 }
 
-export const criarCategoria = async (req, res) => {
+export const cadastrarCategoria = async (req, res) => {
     const {nome, descricao} = req.body;
     
     if (!nome || nome.trim().length < 2) return res.status(400).json({message: "O nome da categoria deve ter ao menos 2 caracteres"})
