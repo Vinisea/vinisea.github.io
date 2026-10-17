@@ -1,5 +1,4 @@
 import { categoria } from "../models/index.js";
-import { Op } from "sequelize";
 
 export const listarcategoria = async (req, res) => {
     try {
