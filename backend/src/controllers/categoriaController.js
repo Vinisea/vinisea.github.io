@@ -47,9 +47,9 @@ export const atualizarCategoria = async (req, res) => {
         if(!categoriaFiltrada) return res.status(404).json({message: "Categoria não localizada"})
 
         if(nome !== undefined) categoria.nome = nome;
-        if(descricao !== undefined) categoria.descricao = descricao
+        if(descricao !== undefined) categoria.descricao = descricao;
 
-        categoriaFiltrada.update(nome, descricao);
+        categoriaFiltrada.update({nome, descricao});
         res.status(200).json({message: "Categoria atualizada com sucesso!", categoria: categoriaFiltrada})        
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -59,7 +59,7 @@ export const atualizarCategoria = async (req, res) => {
 export const deletarCategoria = async (req, res) => {
     const id = req.params.id;
     try {
-        const categoriaFiltrada = categoria.findByPk(id);
+        const categoriaFiltrada = await categoria.findByPk(id);
         if (!categoriaFiltrada) return res.status(404).json({message: "Não foi possível localizar essa categoria"})
         await categoriaFiltrada.destroy();
         res.status(204).json({message: "Categoria apagada com sucesso!"});
