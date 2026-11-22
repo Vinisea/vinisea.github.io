@@ -5,9 +5,19 @@ export const usuario = conn.define(
   "usuario",
   {
     id_usuario: {
-        type: DataTypes.UUIDV4,
+        type: DataTypes.INTEGER,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
+        autoIncrement: true
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        notEmpty: {msg: "Email não pode estar vazio"},
+        isEmail: {msg: "Insira um e-mail válido"}
+      }
     },
     nome: {
         type: DataTypes.STRING,

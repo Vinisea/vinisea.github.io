@@ -67,7 +67,7 @@ export const atividade = conn.define(
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: "categorias",
+            model: "categoria",
             key: "id_categoria"
         }
     },
