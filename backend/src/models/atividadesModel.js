@@ -40,7 +40,7 @@ export const atividade = conn.define(
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            len: {args: [2, 15], msg: "As habilidades devem conter X caracteres"} //Mudar o X para a quantidade que realmente é
+            len: {args: [2, 15], msg: "As habilidades devem conter entre 2 e 15 caracteres"}
         }
     },
     dataEntrega: {
@@ -49,7 +49,7 @@ export const atividade = conn.define(
         validate: {
             isDate: {msg: "A data não está formatado da forma correta."},
             isFuture(value) {
-                if(new Date(value) > new Date()) {
+                if(value > new Date().toISOString().slice(0, 10)) {
                     throw new Error("A data do evento não pode ser futura!")
                 }
             }
