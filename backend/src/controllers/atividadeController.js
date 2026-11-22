@@ -37,17 +37,7 @@ export const listarAtividadePorId = async (req, res) => {
 };
 
 export const cadastrarAtividade = async (req, res) => {
-  const body = req.body;
-  const {
-    titulo,
-    descricao,
-    tecnologias,
-    instituicao,
-    habilidades,
-    dataEntrega,
-    img_url,
-    id_categoria,
-  } = body;
+  const { titulo, descricao, tecnologias, instituicao, habilidades, dataEntrega, img_url, id_categoria }  = req.body;
 
   try {
     const categoriaExiste = await categoria.findByPk(id_categoria);

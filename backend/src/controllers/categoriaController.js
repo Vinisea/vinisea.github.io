@@ -25,22 +25,23 @@ export const listarCategoriaPorId = async (req, res) => {
 };
 
 export const cadastrarCategoria = async (req, res) => {
-  const { nome, descricao } = req.body || {};
+  const { nome, descricao } = req.body;
+  const nomeFormatado = nome.trim();
 
-  if (typeof nome !== "string" || nome.trim().length < 2) {
+  if (typeof nome !== "string" || nomeFormatado.length < 2) {
     return res.status(400).json({message: "O nome da categoria deve ter ao menos 2 caracteres",});
   }
 
   try {
     const categoriaExiste = await categoria.findOne({
-      where: { nome: nome.trim() },
+      where: { nome: nomeFormatado },
     });
     if (categoriaExiste) {
       return res.status(409).json({ message: "Já existe uma categoria com esse nome" });
     }
 
     const categoriaCriada = await categoria.create({
-      nome: nome.trim(),
+      nome: nomeFormatado,
       descricao,
     });
     res.status(201).json({
@@ -53,7 +54,7 @@ export const cadastrarCategoria = async (req, res) => {
 };
 
 export const atualizarCategoria = async (req, res) => {
-  const { nome, descricao } = req.body || {};
+  const { nome, descricao } = req.body;
   const id = req.params.id;
   const dadosAtualizacao = {};
 
