@@ -59,8 +59,12 @@ export const atividade = conn.define(
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            notEmpty: {msg: "A url da imagem é obrigatório"},
-            isURL: {msg: "Insira um link válido"},
+            notEmpty: {msg: "A imagem é obrigatória"},
+            isImagePath(value) {
+                if (!/^\/uploads\/[^/]+$/.test(value) && !/^https?:\/\/.+/.test(value)) {
+                    throw new Error("Insira uma imagem válida");
+                }
+            }
         }
     },
     id_categoria: {
