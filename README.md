@@ -43,4 +43,29 @@ Envie o token nas rotas protegidas pelo cabeçalho `Authorization: Bearer <token
 
 O cadastro de usuário recebe `{ nome, email, senha, verificarSenha }`; o login recebe `{ email, senha }`. A atividade recebe `titulo`, `descricao`, `tecnologias`, `instituicao` (`SESI` ou `SENAI`), `habilidades`, `dataEntrega` (`YYYY-MM-DD`), `img_url` e `id_categoria`. O `id_usuario` é definido pelo token e não deve ser enviado pelo frontend.
 
+### Upload de imagens das atividades
+
+O cadastro e a atualização de atividades recebem arquivos em `multipart/form-data`. O campo do arquivo deve se chamar `imagem`. São aceitos arquivos PNG, JPEG e WebP com tamanho máximo de 5 MB.
+
+No cadastro, envie todos os campos textuais da atividade junto com o arquivo:
+
+```text
+POST /atividade/cadastrar
+Authorization: Bearer <token>
+Content-Type: multipart/form-data
+
+imagem: arquivo.png
+titulo: Meu projeto
+descricao: Descrição da atividade
+tecnologias: React e Node
+instituicao: SENAI
+habilidades: Backend
+dataEntrega: YYYY-MM-DD
+id_categoria: 1
+```
+
+O backend salva o arquivo em `backend/uploads` e retorna `img_url` como uma rota relativa, por exemplo `/uploads/<nome-gerado>.png`. Essa imagem fica disponível pela URL do backend em `/uploads/<nome-gerado>.png`.
+
+Na atualização, o envio da imagem é opcional. Para trocar a imagem, envie o campo `imagem` novamente. Quando nenhum arquivo novo é enviado, a imagem atual é preservada. Ao substituir ou excluir uma atividade, o arquivo local antigo é removido.
+
 As rotas de listagem retornam arrays JSON, inclusive `[]` quando ainda não há registros. As consultas por ID retornam o registro diretamente; criação e atualização retornam `{ message, atividade }` ou `{ message, categoria }`.
