@@ -1,32 +1,26 @@
 import Sequelize from "sequelize";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 
-dotenv.config()
-const databaseURL = process.env.DATABASE_URL
+dotenv.config();
 
-//Quando for subir a api tem que descomentar
-// export const conn = new Sequelize(databaseUrl, {
-//     dialect: "postgres",
-//     dialectOptions: {
-//         ssl: {
-//             require: true,
-//             rejectUnauthorized: false
-//         }
-//     },
-//     logging: false
-// })
+const databaseURL = process.env.DATABASE_URL?.trim();
+const usarSSL = process.env.DATABASE_SSL === "true";
 
-export const conn = new Sequelize({
-    dialect: "sqlite",
-    storage: "./database/db.sqlite"
-})
-
-const testeConexao = () => {
-    try {
-        conn.authenticate();
-        console.log("Conexão com o banco de dados estabelecida com sucesso!")
-    } catch (error) {
-        console.log({msg: "Houve um erro ao se conectar ao banco", err: error.message})
-    }
-}
-testeConexao()
+export const conn = databaseURL
+  ? new Sequelize(databaseURL, {
+      dialect: "postgres",
+      dialectOptions: usarSSL
+        ? {
+            ssl: {
+              require: true,
+              rejectUnauthorized: true,
+            },
+          }
+        : {},
+      logging: false,
+    })
+  : new Sequelize({
+      dialect: "sqlite",
+      storage: process.env.DATABASE_STORAGE || "./database/db.sqlite",
+      logging: false,
+    });
